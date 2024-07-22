@@ -1,7 +1,5 @@
 ## `llm-compressor` W8A8
 
-`llm-compressor` is a library for applying various forms of quantization to various models.
-
 In this example, we will apply weight and activation quantization to `Llama-3-8B-Instruct`.
 
 ### Install
