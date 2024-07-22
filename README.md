@@ -9,7 +9,7 @@ In this example, we will apply weight and activation quantization to `Llama-3-8B
 ```bash
 python3 -m venv venv
 source venv/bin/activate
-pip install git+https://github.com/vllm-project/llm-compressor.git@487e19f29e7ad8200132d4037866bd3207997a00
+pip install git+https://github.com/vllm-project/llm-compressor.git
 ```
 
 ### Run `GPTQ` and `SmoothQuant`
@@ -17,8 +17,6 @@ pip install git+https://github.com/vllm-project/llm-compressor.git@487e19f29e7ad
 ```bash
 python3 apply w8a8.py
 ```
-
-> output is `naive-quantized`, need to swap for `int-quantized`
 
 ## Evaluate and Benchmark
 
