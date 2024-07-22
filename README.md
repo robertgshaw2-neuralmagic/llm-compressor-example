@@ -2,6 +2,8 @@
 
 In this example, we will apply weight and activation quantization to `Llama-3-8B-Instruct`.
 
+## Apply Compression
+
 ### Install
 
 ```bash
@@ -10,7 +12,7 @@ source venv/bin/activate
 pip install git+https://github.com/vllm-project/llm-compressor.git@487e19f29e7ad8200132d4037866bd3207997a00
 ```
 
-### Run Experiment
+### Run `GPTQ` and `SmoothQuant`
 
 ```bash
 python3 apply w8a8.py
@@ -50,7 +52,7 @@ Results:
 |     |       |strict-match    |     5|exact_match|↑  |0.763|±  |0.0135|
 ```
 
-## Benchmark
+### Run Benchmark
 
 Run the benchmark script to see performance.
 
