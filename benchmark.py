@@ -5,15 +5,18 @@ from transformers import AutoTokenizer
 from vllm import LLM, SamplingParams
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--model", type=str, default="meta-llama/Meta-Llama-3-8B-Instruct")
+parser.add_argument("--model", type=str, default="meta-llama/Meta-Llama-3.1-8B-Instruct")
 parser.add_argument("--max-generated-tokens", type=int, default=250)
+parser.add_argument("--tensor-parallel-size", type=int, default=1)
+parser.add_argument("--max-model-len", type=int, default=8192)
 parser.add_argument("--num-samples", type=int, default=1000)
 parser.add_argument("--max-num-seqs", type=int, default=256)
+parser.add_argument("--num-scheduler-steps", type=int, default=1)
 parser.add_argument("--kv-cache-dtype", type=str, default="auto")
 parser.add_argument("--gpu-memory-utilization", type=float, default=.9)
 
 DATASET_ID = "HuggingFaceH4/ultrachat_200k"
-NUM_TURNS_PROMPT = 3
+NUM_TURNS_PROMPT = 7
 
 if __name__ == "__main__":
     args = parser.parse_args()
@@ -23,6 +26,9 @@ if __name__ == "__main__":
     NUM_SAMPLES = args.num_samples
     KV_CACHE_DTYPE = args.kv_cache_dtype
     GPU_MEMORY_UTILIZATION = args.gpu_memory_utilization
+    NUM_SCHEDULER_STEPS = args.num_scheduler_steps
+    MAX_MODEL_LEN = args.max_model_len
+    TENSOR_PARALLEL_SIZE = args.tensor_parallel_size
 
     # Pre-process your dataset.
     # Its a good idea to use the chat template.
@@ -44,12 +50,15 @@ if __name__ == "__main__":
         for example in ds
     ]
 
-    # Initialize vLLM
+    # Initialize vLLM.
     model = LLM(
         MODEL_ID,
         max_num_seqs=MAX_NUM_SEQS,
         kv_cache_dtype=KV_CACHE_DTYPE,
         gpu_memory_utilization=GPU_MEMORY_UTILIZATION,
+        num_scheduler_steps=NUM_SCHEDULER_STEPS,
+        max_model_len=MAX_MODEL_LEN,
+        tensor_parallel_size=TENSOR_PARALLEL_SIZE,
     )
 
     # Generate.
